@@ -71,23 +71,27 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <img src={cover} alt='cover'/>
+        <div className='cover'>
+          <img src={cover} className='pic' alt='pic'/>
+        </div>
         <br/>
         <br/>
-        <div>
+        <div className='controls'>
           <button onClick={this.playAudio}>Play</button>
           <button onClick={this.stopAudio}>Stop</button>
           <button onClick={this.prevAudio}>Prev</button>
           <button onClick={this.nextAudio}>Next</button>
           <p>TRACK {this.state.audioIndex + 1}</p>
         </div>
-        <audio controls onEnded={this.ended} className='audio-element'>
-          <source src={track1}></source>
-        </audio>
-        <br/>
-        <audio controls onChange={this.handleEnd} className='audio-element'>
-          <source src={track2}></source>
-        </audio>
+        <div className='audios'>
+          <audio controls onEnded={this.ended} className='audio-element'>
+            <source src={track1}></source>
+          </audio>
+          <br/>
+          <audio controls onChange={this.handleEnd} className='audio-element'>
+            <source src={track2}></source>
+          </audio>
+        </div>
       </div>
     )
   }
