@@ -1,5 +1,8 @@
 import React from 'react'
 import './App.css'
+import cover from './assets/hemp.jpg'
+import track1 from './assets/ODISEA.mp3'
+import track2 from './assets/IFISAWYOU.mp3'
 
 class App extends React.Component {
   state = {
@@ -68,7 +71,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <img src='http://localhost:3300/images/hemp.jpg' alt='cover'/>
+        <img src={cover} alt='cover'/>
         <br/>
         <br/>
         <div>
@@ -79,11 +82,11 @@ class App extends React.Component {
           <p>TRACK {this.state.audioIndex + 1}</p>
         </div>
         <audio controls onEnded={this.ended} className='audio-element'>
-          <source src='http://localhost:3300/sounds/ODISEA.mp3'></source>
+          <source src={track1}></source>
         </audio>
         <br/>
         <audio controls onChange={this.handleEnd} className='audio-element'>
-          <source src='http://localhost:3300/sounds/IFISAWYOU.mp3'></source>
+          <source src={track2}></source>
         </audio>
       </div>
     )
