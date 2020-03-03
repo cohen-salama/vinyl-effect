@@ -75,7 +75,6 @@ class App extends React.Component {
           <img src={cover} className='pic' alt='pic'/>
         </div>
         <br/>
-        <br/>
         <div className='controls'>
           <button onClick={this.playAudio}>Play</button>
           <button onClick={this.stopAudio}>Stop</button>
