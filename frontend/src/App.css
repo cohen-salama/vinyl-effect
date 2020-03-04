@@ -3,13 +3,10 @@
 }
 
 .cover {
-  width: 100%;
-  height: auto
 }
 
 .pic {
-  width: 100%;
-  height: auto
+  width: 70%
 }
 
 .controls {
@@ -20,4 +17,15 @@
 .audios {
   width: 100%;
   height: auto
+}
+
+.control {
+  height: 50px;
+  width: 50px;
+  border-radius: 30px;
+  margin: 3px
+}
+
+.control:hover {
+  background-color: lightgrey
 }
