@@ -1,90 +1,145 @@
 import React from 'react'
 import './App.css'
+import cover from './assets/nuncaestuveaqui.jpg'
+import track1 from './assets/postal.mp3'
+import track2 from './assets/x.mp3'
+import track3 from './assets/inmersa.mp3'
+import play from './assets/play.png'
+import pause from './assets/pause.png'
+import stop from './assets/stop.png'
+import prev from './assets/prev.png'
+import next from './assets/next.png'
 
 class App extends React.Component {
   state = {
-    audioIndex: 0
+    currAudioIndex: 0,
+    nextAudioIndex: 1,
+    currTime: '0:00',
+    songTitles: ['Postal', 'X', 'Inmersa']
   }
 
   playAudio = () => {
-    const audioEl = document.getElementsByClassName('audio-element')[this.state.audioIndex]
-    audioEl.play()
+    const { currAudioIndex, nextAudioIndex } = this.state
+    const audioElements = document.getElementsByClassName('audio-element')
+    const currentAudio = audioElements[currAudioIndex]
+    currentAudio.controls = true
+    currentAudio.play()
+    if (currAudioIndex < (audioElements.length - 1)) {
+      const nextAudioEl = audioElements[nextAudioIndex]
+      nextAudioEl.load()
+    }
+  }
+
+  pauseAudio = () => {
+    const currentAudio = document.getElementsByClassName('audio-element')[this.state.currAudioIndex]
+    currentAudio.pause()
   }
 
   stopAudio = () => {
-    const audioEl = document.getElementsByClassName('audio-element')[this.state.audioIndex]
-    audioEl.pause()
-    audioEl.load()
+    const currentAudio = document.getElementsByClassName('audio-element')[this.state.currAudioIndex]
+    currentAudio.pause()
+    currentAudio.load()
+    currentAudio.controls = false
+    this.setState({
+      currTime:'0:00'
+    })
   }
 
   prevAudio = async () => {
-    const { audioIndex } = this.state
-    const currentAudio = document.getElementsByClassName('audio-element')[audioIndex]
-    if (audioIndex > 0 && currentAudio.paused) {
+    const { currAudioIndex, nextAudioIndex } = this.state
+    const currentAudio = document.getElementsByClassName('audio-element')[currAudioIndex]
+    if (currAudioIndex > 0 && currentAudio.paused) {
       await this.stopAudio()
-      const newAudioIndex = audioIndex - 1
+      currentAudio.controls = false
       this.setState({
-        audioIndex: newAudioIndex
+        currAudioIndex: currAudioIndex - 1,
+        nextAudioIndex: nextAudioIndex - 1
       })
-    } else if (audioIndex > 0) {
+    } else if (currAudioIndex > 0) {
       await this.stopAudio()
-      const newAudioIndex = audioIndex - 1
+      currentAudio.controls = false
       this.setState({
-        audioIndex: newAudioIndex
+        currAudioIndex: currAudioIndex - 1,
+        nextAudioIndex: nextAudioIndex - 1
       })
       this.playAudio()
     }
   }
 
   nextAudio = async () => {
-    const { audioIndex } = this.state
+    const { currAudioIndex, nextAudioIndex } = this.state
     const audioElements = document.getElementsByClassName('audio-element')
-    const currentAudio = audioElements[audioIndex]
-    if (audioIndex < (audioElements.length - 1) && currentAudio.paused) {
+    const currentAudio = audioElements[currAudioIndex]
+    if (currAudioIndex < (audioElements.length - 1) && currentAudio.paused) {
       await this.stopAudio()
-      const newAudioIndex = this.state.audioIndex + 1
+      currentAudio.controls = false
       this.setState({
-        audioIndex: newAudioIndex
+        currAudioIndex: currAudioIndex + 1,
+        nextAudioIndex: nextAudioIndex + 1
       })
-    } else if (audioIndex < (audioElements.length - 1)) {
+    } else if (currAudioIndex < (audioElements.length - 1)) {
       await this.stopAudio()
-      const newAudioIndex = this.state.audioIndex + 1
+      currentAudio.controls = false
       this.setState({
-        audioIndex: newAudioIndex
+        currAudioIndex: currAudioIndex + 1,
+        nextAudioIndex: nextAudioIndex + 1
       })
       this.playAudio()
     }
   }
 
-  ended = async () => {
-    console.log('ended')
-    const newAudioIndex = this.state.audioIndex + 1
-    await this.setState({
-      audioIndex: newAudioIndex
-    })
-    this.playAudio()
+  secondsToMinutes = (seconds) => Math.floor(seconds / 60) + ':' + ('0' + Math.floor(seconds % 60)).slice(-2)
+
+  handleFlow = async (event) => {
+    const { currAudioIndex, nextAudioIndex } = this.state
+    const audioElements = document.getElementsByClassName('audio-element')
+    if (currAudioIndex < (audioElements.length - 1) &&
+       event.target.currentTime > (event.target.duration - 0.3) &&
+       event.target.currentTime < (event.target.duration - 0.05)) {
+      const currentAudio = audioElements[currAudioIndex]
+      currentAudio.controls = false
+      await this.setState({
+        currTime: '0:00',
+        currAudioIndex: currAudioIndex + 1,
+        nextAudioIndex: nextAudioIndex + 1
+      })
+      this.playAudio()
+    } else if (event.target.currentTime < (event.target.duration - 0.3)) {
+      await this.setState({
+        currTime: this.secondsToMinutes(event.target.currentTime)
+      })
+    }
   }
 
   render() {
+    const { songTitles, currAudioIndex, currTime } = this.state
     return (
       <div className="App">
-        <img src='http://localhost:3300/images/hemp.jpg' alt='cover'/>
-        <br/>
-        <br/>
-        <div>
-          <button onClick={this.playAudio}>Play</button>
-          <button onClick={this.stopAudio}>Stop</button>
-          <button onClick={this.prevAudio}>Prev</button>
-          <button onClick={this.nextAudio}>Next</button>
-          <p>TRACK {this.state.audioIndex + 1}</p>
+        <div className='cover'>
+          <img src={cover} className='pic' alt='pic'/>
         </div>
-        <audio controls onEnded={this.ended} className='audio-element'>
-          <source src='http://localhost:3300/sounds/ODISEA.mp3'></source>
-        </audio>
         <br/>
-        <audio controls onChange={this.handleEnd} className='audio-element'>
-          <source src='http://localhost:3300/sounds/IFISAWYOU.mp3'></source>
-        </audio>
+        <div className='controls'>
+          <img src={play} onClick={this.playAudio} className='control' alt='play'></img>
+          <img src={pause} onClick={this.pauseAudio} className='control' alt='pause'></img>
+          <img src={stop} onClick={this.stopAudio} className='control' alt='stop'></img>
+          <img src={prev} onClick={this.prevAudio} className='control' alt='prev'></img>
+          <img src={next} onClick={this.nextAudio} className='control' alt='next'></img>
+          <h3 className='songTitle'>Nunca Estuve Aquí</h3>
+          <h4 className='songName'>{songTitles[currAudioIndex]}</h4>
+          <p className='songTime'>{currTime}</p>
+        </div>
+        <div className='audios'>
+          <audio onTimeUpdate={this.handleFlow} className='audio-element'>
+            <source src={track1}></source>
+          </audio>
+          <audio onTimeUpdate={this.handleFlow} className='audio-element'>
+            <source src={track2}></source>
+          </audio>
+          <audio onTimeUpdate={this.handleFlow} className='audio-element'>
+            <source src={track3}></source>
+          </audio>
+        </div>
       </div>
     )
   }
