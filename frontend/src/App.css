@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-color: darkgrey;
+  background-color: lightgrey;
 }
 
 .pic {
@@ -30,5 +30,5 @@
 }
 
 .control:hover {
-  background-color: lightgrey
+  background-color: darkgrey
 }
