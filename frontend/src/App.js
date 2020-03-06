@@ -20,7 +20,7 @@ class App extends React.Component {
     currAudioIndex: 0,
     nextAudioIndex: 1,
     currTime: '0:00',
-    songTitles: ['Postal', 'X', 'Inmersa', 'Tema Triste', 'El Presagio', 'Algo', 'Shanzhai']
+    songTitles: ['postal', 'x', 'inmersa', 'tema triste', 'el presagio', 'algo', 'shanzhai']
   }
 
   playAudio = () => {
@@ -132,7 +132,7 @@ class App extends React.Component {
           <img src={next} onClick={this.nextAudio} className='control' alt='next'></img>
         </div>
         <div className='display'>
-          <h1 className='songTitle'>Nunca Estuve Aquí</h1>
+          <h1 className='songTitle'>nunca estuve aquí</h1>
           <h2 className='songName'>{songTitles[currAudioIndex]}</h2>
           <h3 className='songTime'>{currTime}</h3>
         </div>
