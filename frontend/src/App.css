@@ -1,17 +1,20 @@
 .App {
   text-align: center;
-}
-
-.cover {
+  background-color: darkgrey;
 }
 
 .pic {
-  width: 70%
+  width: 36%
 }
 
 .controls {
   width: 100%;
   height: auto
+}
+
+.display {
+  font-family: monospace;
+  color: black;
 }
 
 .audios {
