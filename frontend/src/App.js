@@ -4,6 +4,10 @@ import cover from './assets/nuncaestuveaqui.jpg'
 import track1 from './assets/postal.mp3'
 import track2 from './assets/x.mp3'
 import track3 from './assets/inmersa.mp3'
+import track4 from './assets/tematriste.mp3'
+import track5 from './assets/elpresagio.mp3'
+import track6 from './assets/algo.mp3'
+import track7 from './assets/shanzhai.mp3'
 import play from './assets/play.png'
 import pause from './assets/pause.png'
 import stop from './assets/stop.png'
@@ -12,17 +16,18 @@ import next from './assets/next.png'
 
 class App extends React.Component {
   state = {
+    songArray: [track1, track2, track3, track4, track5, track6, track7],
     currAudioIndex: 0,
     nextAudioIndex: 1,
     currTime: '0:00',
-    songTitles: ['Postal', 'X', 'Inmersa']
+    songTitles: ['postal', 'x', 'inmersa', 'tema triste', 'el presagio', 'algo', 'shanzhai']
   }
 
   playAudio = () => {
     const { currAudioIndex, nextAudioIndex } = this.state
     const audioElements = document.getElementsByClassName('audio-element')
     const currentAudio = audioElements[currAudioIndex]
-    currentAudio.controls = true
+//    currentAudio.controls = true
     currentAudio.play()
     if (currAudioIndex < (audioElements.length - 1)) {
       const nextAudioEl = audioElements[nextAudioIndex]
@@ -39,7 +44,7 @@ class App extends React.Component {
     const currentAudio = document.getElementsByClassName('audio-element')[this.state.currAudioIndex]
     currentAudio.pause()
     currentAudio.load()
-    currentAudio.controls = false
+//    currentAudio.controls = false
     this.setState({
       currTime:'0:00'
     })
@@ -50,14 +55,14 @@ class App extends React.Component {
     const currentAudio = document.getElementsByClassName('audio-element')[currAudioIndex]
     if (currAudioIndex > 0 && currentAudio.paused) {
       await this.stopAudio()
-      currentAudio.controls = false
+//      currentAudio.controls = false
       this.setState({
         currAudioIndex: currAudioIndex - 1,
         nextAudioIndex: nextAudioIndex - 1
       })
     } else if (currAudioIndex > 0) {
       await this.stopAudio()
-      currentAudio.controls = false
+//      currentAudio.controls = false
       this.setState({
         currAudioIndex: currAudioIndex - 1,
         nextAudioIndex: nextAudioIndex - 1
@@ -72,14 +77,14 @@ class App extends React.Component {
     const currentAudio = audioElements[currAudioIndex]
     if (currAudioIndex < (audioElements.length - 1) && currentAudio.paused) {
       await this.stopAudio()
-      currentAudio.controls = false
+//      currentAudio.controls = false
       this.setState({
         currAudioIndex: currAudioIndex + 1,
         nextAudioIndex: nextAudioIndex + 1
       })
     } else if (currAudioIndex < (audioElements.length - 1)) {
       await this.stopAudio()
-      currentAudio.controls = false
+//      currentAudio.controls = false
       this.setState({
         currAudioIndex: currAudioIndex + 1,
         nextAudioIndex: nextAudioIndex + 1
@@ -112,7 +117,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { songTitles, currAudioIndex, currTime } = this.state
+    const { songArray, songTitles, currAudioIndex, currTime } = this.state
     return (
       <div className="App">
         <div className='cover'>
@@ -125,21 +130,22 @@ class App extends React.Component {
           <img src={stop} onClick={this.stopAudio} className='control' alt='stop'></img>
           <img src={prev} onClick={this.prevAudio} className='control' alt='prev'></img>
           <img src={next} onClick={this.nextAudio} className='control' alt='next'></img>
-          <h3 className='songTitle'>Nunca Estuve Aquí</h3>
-          <h4 className='songName'>{songTitles[currAudioIndex]}</h4>
-          <p className='songTime'>{currTime}</p>
+        </div>
+        <div className='display'>
+          <h1 className='songTitle'>nunca estuve aquí</h1>
+          <h2 className='songName'>{songTitles[currAudioIndex]}</h2>
+          <h3 className='songTime'>{currTime}</h3>
         </div>
         <div className='audios'>
-          <audio onTimeUpdate={this.handleFlow} className='audio-element'>
-            <source src={track1}></source>
-          </audio>
-          <audio onTimeUpdate={this.handleFlow} className='audio-element'>
-            <source src={track2}></source>
-          </audio>
-          <audio onTimeUpdate={this.handleFlow} className='audio-element'>
-            <source src={track3}></source>
-          </audio>
+          {songArray.map((song) => {
+            return (
+              <audio onTimeUpdate={this.handleFlow} className='audio-element'>
+                <source src={song}></source>
+              </audio>
+            )
+          })}
         </div>
+        <br/>
       </div>
     )
   }
