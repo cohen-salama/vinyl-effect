@@ -1,26 +1,15 @@
 import React from 'react'
 import './App.css'
 import cover from './assets/nuncaestuveaqui.jpg'
-import track1 from './assets/postal.mp3'
-import track2 from './assets/x.mp3'
-import track3 from './assets/inmersa.mp3'
-import track4 from './assets/tematriste.mp3'
-import track5 from './assets/elpresagio.mp3'
-import track6 from './assets/algo.mp3'
-import track7 from './assets/shanzhai.mp3'
-import play from './assets/play.png'
-import pause from './assets/pause.png'
-import stop from './assets/stop.png'
-import prev from './assets/prev.png'
-import next from './assets/next.png'
+import buttons from './assets/buttons'
+import trackArray from './assets/trackArray'
+import trackTitles from './assets/trackTitles'
 
 class App extends React.Component {
   state = {
-    songArray: [track1, track2, track3, track4, track5, track6, track7],
     currAudioIndex: 0,
     nextAudioIndex: 1,
     currTime: '0:00',
-    songTitles: ['postal', 'x', 'inmersa', 'tema triste', 'el presagio', 'algo', 'shanzhai']
   }
 
   playAudio = () => {
@@ -117,7 +106,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { songArray, songTitles, currAudioIndex, currTime } = this.state
+    const { currAudioIndex, currTime } = this.state
     return (
       <div className="App">
         <div className='cover'>
@@ -125,19 +114,19 @@ class App extends React.Component {
         </div>
         <br/>
         <div className='controls'>
-          <img src={play} onClick={this.playAudio} className='control' alt='play'></img>
-          <img src={pause} onClick={this.pauseAudio} className='control' alt='pause'></img>
-          <img src={stop} onClick={this.stopAudio} className='control' alt='stop'></img>
-          <img src={prev} onClick={this.prevAudio} className='control' alt='prev'></img>
-          <img src={next} onClick={this.nextAudio} className='control' alt='next'></img>
+          <img src={buttons.play} onClick={this.playAudio} className='control' alt='play'></img>
+          <img src={buttons.pause} onClick={this.pauseAudio} className='control' alt='pause'></img>
+          <img src={buttons.stop} onClick={this.stopAudio} className='control' alt='stop'></img>
+          <img src={buttons.prev} onClick={this.prevAudio} className='control' alt='prev'></img>
+          <img src={buttons.next} onClick={this.nextAudio} className='control' alt='next'></img>
         </div>
         <div className='display'>
           <h1 className='songTitle'>nunca estuve aquí</h1>
-          <h2 className='songName'>{songTitles[currAudioIndex]}</h2>
+          <h2 className='songName'>{trackTitles[currAudioIndex]}</h2>
           <h3 className='songTime'>{currTime}</h3>
         </div>
         <div className='audios'>
-          {songArray.map((song) => {
+          {trackArray.map((song) => {
             return (
               <audio onTimeUpdate={this.handleFlow} className='audio-element'>
                 <source src={song}></source>
