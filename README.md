@@ -6,7 +6,7 @@ this application was created with the intention of providing my musician friends
   
 the musician who lent me his album, Gastón Grinszpun, has a collection of songs with overlapping transitions, similar to Dark Side of the Moon by Pink Floyd or Led Zeppelin III, with sounds at the end of one song continuing into the following one.  
   
-he told me about how most music sharing services add a gap of silence in between songs, so this app takes inspiration from the features of an analog vinyl player (no fast foward or rewind, no song seeking, no gap between songs); I named the solution for his particular problem the "vinyl-effect".
+he told me about how most music sharing services add a gap of silence in between songs, so this app takes inspiration from the features of an analog vinyl player (no fast foward or rewind, no song seeking, no gap between songs); I named the solution for this particular problem "the vinyl-effect".
 
 ## features
 
