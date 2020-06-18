@@ -22,6 +22,6 @@ he told me about how most music sharing services add a gap of silence in between
 * CSS & HTML
 * HTML5 audio
 
-## Live Version
+## live version
 
 [vinyl-effect](https://nuncaestuveaque.herokuapp.com)
