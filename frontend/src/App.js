@@ -16,7 +16,6 @@ class App extends React.Component {
     const { currAudioIndex, nextAudioIndex } = this.state
     const audioElements = document.getElementsByClassName('audio-element')
     const currentAudio = audioElements[currAudioIndex]
-//    currentAudio.controls = true
     currentAudio.play()
     if (currAudioIndex < (audioElements.length - 1)) {
       const nextAudioEl = audioElements[nextAudioIndex]
@@ -33,7 +32,6 @@ class App extends React.Component {
     const currentAudio = document.getElementsByClassName('audio-element')[this.state.currAudioIndex]
     currentAudio.pause()
     currentAudio.load()
-//    currentAudio.controls = false
     this.setState({
       currTime:'0:00'
     })
@@ -44,14 +42,12 @@ class App extends React.Component {
     const currentAudio = document.getElementsByClassName('audio-element')[currAudioIndex]
     if (currAudioIndex > 0 && currentAudio.paused) {
       await this.stopAudio()
-//      currentAudio.controls = false
       this.setState({
         currAudioIndex: currAudioIndex - 1,
         nextAudioIndex: nextAudioIndex - 1
       })
     } else if (currAudioIndex > 0) {
       await this.stopAudio()
-//      currentAudio.controls = false
       this.setState({
         currAudioIndex: currAudioIndex - 1,
         nextAudioIndex: nextAudioIndex - 1
@@ -66,14 +62,12 @@ class App extends React.Component {
     const currentAudio = audioElements[currAudioIndex]
     if (currAudioIndex < (audioElements.length - 1) && currentAudio.paused) {
       await this.stopAudio()
-//      currentAudio.controls = false
       this.setState({
         currAudioIndex: currAudioIndex + 1,
         nextAudioIndex: nextAudioIndex + 1
       })
     } else if (currAudioIndex < (audioElements.length - 1)) {
       await this.stopAudio()
-//      currentAudio.controls = false
       this.setState({
         currAudioIndex: currAudioIndex + 1,
         nextAudioIndex: nextAudioIndex + 1
