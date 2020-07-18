@@ -6,10 +6,13 @@ import trackArray from './assets/trackArray'
 import trackTitles from './assets/trackTitles'
 
 class App extends React.Component {
-  state = {
+  constructor() {
+    super()
+    this.state = {
     currAudioIndex: 0,
     nextAudioIndex: 1,
     currTime: '0:00',
+    }
   }
 
   playAudio = () => {
